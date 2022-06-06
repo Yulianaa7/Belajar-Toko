@@ -36,10 +36,13 @@ Route::group(['middleware' => ['jwt.verify']], function ()
         Route::put('/produk/{id_produk}', 'ProdukController@update');
 
         Route::post('/transaksi', 'TransaksiController@store');
+        // Route::post('/storecarttodb', 'TransaksiController@store');
         Route::put('/transaksi/{id_transaksi}', 'TransaksiController@update');
 
         Route::post('/detail_transaksi', 'Detail_TransaksiController@store');
         Route::put('/detail_transaksi/{id_detail_transaksi}', 'Detail_TransaksiController@update');
+
+        Route::post('/storecarttodb', 'transactionController@store');
     });
     Route::get('/pelanggan', 'PelangganController@show');
     Route::get('/pelanggan/{id_pelanggan}', 'PelangganController@detail');

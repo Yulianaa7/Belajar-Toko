@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
+
 class ProdukController extends Controller
 {
     public function show(){
@@ -41,13 +45,24 @@ class ProdukController extends Controller
             'harga' => $request->harga,
             'foto_produk' => $request->foto_produk,
         ]);
+
+        $data = Produk::where('nama_produk', '=', $request->nama_produk)->get();
+
         if($simpan)
         {
-            return Response()->json(['status' => 1]);
+            return Response()->json([
+                'status' => 1,
+                'message' => 'Succes create new data!',
+                'data' => $data
+            ]);
         }
         else
         {
-            return Response()->json(['status' => 0]);
+            return Response()->json([
+                'status' => 0,
+                'message' => 'Failed create new data!',
+                'data' => $data
+            ]);
         }
     }
 

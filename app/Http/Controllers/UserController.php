@@ -21,7 +21,14 @@ class UserController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token', 500]);
         }
-            return response()->json(compact('token'));
+            //return response()->json(compact('token'));
+            $data = User::where('email', '=', $request->email)-> get();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Succes login!',
+                'token' => $token,
+                'data' => $data
+            ]);
     }
 
     public function register(Request $request)
@@ -66,6 +73,11 @@ class UserController extends Controller
         {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-        return response()->json(compact('user'));
+        //return response()->json(compact('user'));
+        return response()->json([
+            'status' => 1,
+            'message' => 'Succes login!',
+            'data' => $user
+        ]);
     }
 }

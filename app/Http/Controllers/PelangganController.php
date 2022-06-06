@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Validator; //memvalidasi form
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; //agar password nya tidak terlihat
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
+
 class PelangganController extends Controller
 {
     //show data
@@ -44,13 +48,24 @@ class PelangganController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password)
         ]);
+
+        $data = Pelanggan::where('nama', '=', $request->nama)->get();
+
         if($simpan)
         {
-            return Response()->json(['status' => 1]);
+            return Response()->json([
+                'status' => 1,
+                'message' => 'Succes create new data!',
+                'data' => $data
+            ]);
         }
         else
         {
-            return Response()->json(['status' => 0]);
+            return Response()->json([
+                'status' => 0,
+                'message' => 'Failed create new data!',
+                'data' => $data
+            ]);
         }
     }
 
@@ -75,10 +90,21 @@ class PelangganController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password)
         ]);
+
+        $data = Pelanggan::where('nama', '=', $request->nama)->get();
+
         if($ubah) {
-            return Response()->json(['status' => 1]);
+            return Response()->json([
+                'status' => 1,
+                'message' => 'Succes update data!',
+                'data' => $data
+            ]);
         }else{
-            return Response()->json(['status' => 0]);
+            return Response()->json([
+                'status' => 0,
+                'message' => 'Failed update data!',
+                'data' => $data
+            ]);
         }
     }
 
